@@ -653,6 +653,19 @@ describe('index', () => {
       })
     })
   })
+  describe('purgeQueue', () => {
+    it('calls SQS SDK purgeQueue method with queue URL', () => {
+      inst = new Squiss({ queueUrl: 'foo' })
+      inst.sqs = new SQSStub()
+      const spy = sinon.spy(inst.sqs, 'purgeQueue')
+      return inst.purgeQueue().then(() => {
+        spy.should.be.calledOnce()
+        spy.should.be.calledWith({ QueueUrl: 'foo' })
+        inst.sqs.msgs.length.should.equal(0)
+        inst.sqs.msgCount.should.equal(0)
+      })
+    })
+  })
   describe('sendMessage', () => {
     it('sends a string message with no extra arguments', () => {
       inst = new Squiss({ queueUrl: 'foo' })

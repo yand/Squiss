@@ -8,3 +8,6 @@ coverage
 
 # Build
 build/
+
+# IDE
+.idea/**

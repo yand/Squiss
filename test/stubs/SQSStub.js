@@ -109,6 +109,14 @@ class SQSStub extends EventEmitter {
     })
   }
 
+  purgeQueue() {
+    this.msgs = []
+    this.msgCount = 0
+    return Promise.resolve({
+      RequestId: '6fde8d1e-52cd-4581-8cd9-c512f4c64223'
+    })
+  }
+
   sendMessage(params) {
     this._addMessage(params.QueueUrl, params.MessageBody)
     return this._makeReq(() => {

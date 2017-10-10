@@ -319,6 +319,23 @@ class Squiss extends EventEmitter {
   }
 
   /**
+   * Deletes all the messages in a queue and init in flight.
+   * @returns {Promise} Resolves on complete. Rejects with the official AWS SDK's error object.
+   */
+  purgeQueue() {
+    return this.getQueueUrl().then((queueUrl) => {
+      return this.sqs.purgeQueue({ QueueUrl: queueUrl })
+        .then(data => {
+          this._inFlight = 0
+          this._delQueue = []
+          this._delTimer = null
+
+          return data
+        })
+    })
+  }
+
+  /**
    * Sends an individual message to the configured queue.
    * @param {string|Object} message The message to be sent. Objects will be JSON.stringified.
    * @param {number} [delay] The number of seconds by which to delay the delivery of the message, max 900. If not

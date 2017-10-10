@@ -76,6 +76,9 @@ Informs Squiss that you got a message that you're not planning on deleting, so t
 ### squiss.releaseMessage(Message)
 Releases the given Message object back to the queue by setting its `VisibilityTimeout` to `0` and marking the message as handled internally. You can also call `message.release()` on the message itself to invoke this.
 
+### squiss.purgeQueue()
+Deletes all the messages in a queue and init in flight 
+
 ### squiss.sendMessage(message, delay, attributes)
 Sends an individual message to the configured queue, and returns a promise that resolves with AWS's official message metadata: an object containing `MessageId`, `MD5OfMessageAttributes`, and `MD5OfMessageBody`. Arguments:
 - **message**. The message to push to the queue. If it's a string, great! If it's an Object, Squiss will call JSON.stringify on it.
