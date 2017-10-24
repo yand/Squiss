@@ -324,7 +324,7 @@ class Squiss extends EventEmitter {
    */
   purgeQueue() {
     return this.getQueueUrl().then((queueUrl) => {
-      return this.sqs.purgeQueue({ QueueUrl: queueUrl })
+      return this.sqs.purgeQueue({ QueueUrl: queueUrl }).promise()
         .then(data => {
           this._inFlight = 0
           this._delQueue = []
